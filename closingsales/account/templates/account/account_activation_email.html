@@ -1,0 +1,9 @@
+{% autoescape off %}
+Hi {{ user.name }},
+
+Vielen Dank für Ihre Registrierung bei ClosingShops.
+
+Bitte klicken Sie auf den folgenden Link, um Ihre Registrierung zu bestätigen:
+
+http://{{ domain }}{% url 'account_activate' uidb64=uuid token=token %}
+{% endautoescape %}

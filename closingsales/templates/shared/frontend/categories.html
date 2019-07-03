@@ -1,0 +1,30 @@
+<!--Categories start-->
+<div class="categories-wrap">
+  <div class="container">
+    <div class="heading-title"><span>Kategorien</span></div>
+    {% if not main_categories %}
+    <div class="heading-text">Keine Kategorien gefunden.</div>
+    {% endif %}
+    
+    <ul class="row categories-service">
+      {% for categories in main_categories %}
+        <div class="col-xs-12 category-container">
+        {% for category in categories %}
+        <li class="col-md-3 col-sm-6">
+          <div class="categorybox">
+            <div class="icon"><i class="fa fa-briefcase" aria-hidden="true"></i></div>
+            <h4><a href="#">{{category.name}}</a></h4>
+            <ul class="categories">
+              {% for subcat in category.subcategories.all %}
+                <li><a href="{% url 'classifieds' %}?category={{category.name}}">{{ subcat.name }}({{subcat.total_ads}})</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+        </li>
+        {% endfor %}
+        </div>
+       {% endfor %}
+    </ul>
+  </div>
+</div>
+<!--Categories end-->

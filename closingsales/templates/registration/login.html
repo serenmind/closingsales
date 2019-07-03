@@ -1,0 +1,65 @@
+{% extends 'application.html' %}
+{% block title %} - Login {% endblock title %}
+{% block mainblock %}
+<div class="inner-heading">
+  <div class="container">
+    <h1>Login</h1>
+  </div>
+</div>
+<div class="inner-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-2"></div>
+      <div class="col-md-6 col-sm-8">
+        <div class="login">
+          <div class="contctxt">Benutzer Login</div>
+          <div class="formint conForm">
+            {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">{{ error }}</div>
+            {% endfor %}
+            {% endif %}
+            <form method="post" action="{{request.get_full_path}}" id="singin-form">
+              {% csrf_token %}
+
+              {% for field in form %}
+              <div class="input-wrap">
+                <label for="{{field.html_name}}_login">{{field.html_name|title}}</label>
+                <input class="form-control"
+                  id="{{field.html_name}}_login"
+                  name="{{ field.html_name }}"
+                  placeholder="{{field.html_name}}" {% if field.html_name == 'password'%} type='password' {% endif %}/>
+              </div>
+              {% endfor %}
+              <div class="float-right" style="float: right;">
+                <a href="{% url 'password_reset' %}">Passwort Vergessen?</a>
+              </div>
+              <div class="sub-btn">
+                <input type="submit" class="sbutn" value="Login">
+              </div>
+
+              <div class="newuser"><i class="fa fa-user" aria-hidden="true"></i> Noch kein Mitglied? <a href="{% url 'signup' %}">Jetzt Registrieren</a></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-2"></div>
+    </div>
+  </div>
+</div>
+{% endblock mainblock %}
+
+{% block javascripts %}
+<script type="text/javascript">
+  $(function() {
+    'use strict';
+    var path = document.location.pathname;
+    var search = document.location.search;
+    var form;
+    if (search == '') {
+      form = $('#singin-form');
+      form.attr('action', path + '?next=/dashboard')
+    }
+  });
+</script>
+{% endblock javascripts %}

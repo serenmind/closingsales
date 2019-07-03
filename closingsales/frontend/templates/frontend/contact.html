@@ -1,0 +1,101 @@
+{% extends 'application.html'%}
+{% load static %}
+{% block mainblock %}
+<!--inner start-->
+<div class="inner-heading">
+  <div class="container">
+    <h1>Kontaktieren Sie</h1>
+  </div>
+</div>
+<!--inner end-->
+
+<div class="inner-wrap">
+  <div class="container">
+    <!--contact start-->
+    <div class="contact-info">
+      <div class="row">
+        <div class="col-md-3 col-sm-6">
+          <div class="contactWrp">
+            <div class="contact-icon"> <i class="fa fa-map-marker" aria-hidden="true"></i> </div>
+            <h5>Unser Standort</h5>
+            <p>Theaterstraße 18, 52062 Aachen</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+          <div class="contactWrp">
+            <div class="contact-icon"> <i class="fa fa-phone" aria-hidden="true"></i> </div>
+            <h5>Rufen Sie uns an</h5>
+            <p>Telefon : +49 24195787737 </p>
+            </div>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <div class="contactWrp">
+              <div class="contact-icon"> <i class="fa fa-laptop" aria-hidden="true"></i> </div>
+              <h5>Online verbinden</h5>
+              <p>Email : contact@closingshops.de</p>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="contactWrp">
+                <div class="contact-icon"> <i class="fa fa-globe" aria-hidden="true"></i> </div>
+                <h5>Besuchen Sie uns</h5>
+                <p>Website : closingshops.de</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              {% if message %}
+                <div class="alert alert-success">
+                  {{ message }}
+                </div>
+              {% endif %}
+              <form method="post" action="/contact" id="contact-form">
+                {% csrf_token %}
+                <div class="row">
+                  <div class="col-sm-6">
+                    <div class="input-wrap">
+                      <input type="text" name="name" placeholder="Vollständiger Name" class="form-control" id="full_name" autocomplete="off" required>
+                      <div class="form-icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                      <span class="help-block">Bitte geben Sie Ihre Vollständiger Name ein </span>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="input-wrap">
+                      <input type="tel" name="phone" placeholder="Telefon" class="form-control" id="phone" autocomplete="off" required>
+                      <div class="form-icon"><i class="fa fa-phone" aria-hidden="true"></i></div>
+                      <span class="help-block">Bitte geben Sie Ihr Telefon ein </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="input-wrap">
+                  <input type="email" name="email" placeholder="Ihre Email" class="form-control" id="email" autocomplete="off" required>
+                  <div class="form-icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+                  <span class="help-block">Bitte geben Sie Ihre Email ein. </span>
+                </div>
+                <div class="input-wrap">
+                  <textarea class="form-control" name="message" placeholder="Type Your Message here.." id="message">
+                    
+                  </textarea>
+                  <div class="form-icon"><i class="fa fa-comment" aria-hidden="true"></i></div>
+                  <span class="help-block">Bitte schreiben Sie Ihre Nachricht </span>
+                </div>
+                <div class="contact-btn">
+                  <button class="sub" id="submit" > <i class="fa fa-paper-plane" aria-hidden="true"></i> Nachricht Senden</button>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <iframe width="100%" height="300" src="https://maps.google.com/maps?q=Theaterstra%C3%9Fe%2018%2C%2052062%20Aachen&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no"></iframe>
+            </div>
+          </div>
+          <!--contact end-->
+        </div>
+      </div>
+      {% endblock mainblock %}
+
+
+      {% block javascripts %}
+        <script type="text/javascript" src="{% static 'javascripts/frontend/contact.js' %}"></script>
+      {% endblock %}

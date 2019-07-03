@@ -1,0 +1,71 @@
+{% extends "dashboard.html" %}
+{% block content %}
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Shop Types</h3>
+    <div class="box-tools">
+      <div class="input-group input-group-sm" style="width: 150px;">
+        <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
+
+        <div class="input-group-btn">
+          <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body table-responsive no-padding">
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th>S.N</th>
+          <th>Name</th>
+          <th>Date Created</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        {% for article in object_list %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{article.name}}</td>
+            <td>{{article.created_at|date:"M d, Y" }}</td>
+            <td>
+              {% if article.status == 'DRAFT' %}
+                <span class="label label-warning">Draft</span>
+              {% else %}
+                <span class="label label-success">Active</span>
+              {% endif %}
+            </td>
+            <td>
+              <button type="button" class="btn btn-primary btn-flat">Edit</button>
+              <button type="button" class="btn btn-danger btn-flat">Delete</button>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td> No Conentent</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        {% endfor %}
+        
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <div class="pull-left">
+      <a href="#" class="btn btn-block btn-primary btn-flat">Create New</a>
+    </div>
+    <ul class="pagination pagination-sm no-margin pull-right">
+      <li><a href="#">«</a></li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">»</a></li>
+    </ul>
+  </div>
+</div>
+{% endblock content %}

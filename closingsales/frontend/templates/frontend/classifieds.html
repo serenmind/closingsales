@@ -1,0 +1,137 @@
+{% extends 'application.html' %}
+{% load  frontend_extracts %}
+{% load static %}
+{% block mainblock %}
+	<!--inner heading start-->
+	<div class="inner-heading">
+	  <div class="container">
+	    <h1>Alle Anzeigen</h1>
+	  </div>
+	</div>
+	<!--inner heading end-->
+
+	<!--listing start-->
+<div class="inner-wrap listing">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-4">
+        <div class="leftSidebar">
+          <h3>Anzeigen Suchen</h3>
+          <div class="sidebarpad">
+            <form>
+              <h4>Schlüsselwort angeben</h4>
+              <div class="input-wrap">
+                <input type="text" name="keyword" 
+                autocomplete="off" 
+                placeholder="was suchen sie" class="form-control" value="{{keyword}}">
+              </div>
+              <h4>Kagegorie Wählen</h4>
+              <div class="input-wrap">
+                <select name="category" class="form-control">
+                  <option value="">Kategorie </option>
+                  {% for cat in categories %}
+                    <option value="{{cat.name}}" {% if cat.id == category.id %} selected {% endif %}>{{cat.name}}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <h4>Ort angeben</h4>
+              <div class="input-wrap">
+                <input type="text" name="location" 
+                autocomplete="off" 
+                placeholder="wo suchen sie..." class="form-control" value="{{location}}">
+              </div>
+              <div class="sub-btn">
+                <input type="submit" class="sbutn" value="Suchen">
+              </div>
+            </form>
+            
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9 col-sm-8">
+        <ul class="listService">
+        {% for ads in advertisements %}
+          <li>
+            <div class="listWrpService">
+              <div class="row">
+                <div class="col-md-3 col-sm-3">
+                  {% if ads.images %}
+                    {% with images=ads.images %}
+                        {% if images.count %}
+                            {% with image=images.first %}
+                                <div class="listImg"><img src="{{ image.file.url }}"></div>
+                            {% endwith %}
+                        {% else %}
+                          <div class="listImge"><img src="{% static 'images/placeholder.png'%}"></div>
+                        {% endif %}
+                    {% endwith %}
+                    
+                  {% endif %}
+                </div>
+                <div class="col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                      <h3><a href="{% url 'classified-detail' ads.id %}">{{ads.title}}</a></h3>
+                    </div>
+                  </div>
+                  <div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i> {{ads.address}}</div>
+                  {{ ads.description | extract | safe }}
+                  <div class="view-btn"><a href="{% url 'classified-detail' ads.id %}">Details anzeigen.</a></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          {% empty %}
+          <li>
+          	<div class="listWrpService">
+              <div class="row">
+                <div class="col-md-9 col-sm-9">
+                  <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-8">
+                      <h3 style="text-align: center;">Sorry, keine Anzeigen gefunden</h3>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          	
+          </li>
+          {% endfor %}
+          
+        </ul>
+        {% if advertisements.has_other_pages %}
+        <div class="pagiWrap">
+          <div class="row">
+            <div class="col-md-4 col-sm-4">
+              <div class="showreslt">Zeigt 1-10</div>
+            </div>
+            <div class="col-md-8 col-sm-8">
+			  <ul class="pagination">
+			    {% if advertisements.has_previous %}
+			      <li><a href="?page={{ advertisements.previous_page_number }}">&laquo;</a></li>
+			    {% else %}
+			      <li class="disabled"><span>&laquo;</span></li>
+			    {% endif %}
+			    {% for i in advertisements.paginator.page_range %}
+			      {% if advertisements.number == i %}
+			        <li class="active"><span>{{ i }} <span class="sr-only">(Actual)</span></span></li>
+			      {% else %}
+			        <li><a href="?page={{ i }}">{{ i }}</a></li>
+			      {% endif %}
+			    {% endfor %}
+			    {% if advertisements.has_next %}
+			      <li><a href="?page={{ advertisements.next_page_number }}">&raquo;</a></li>
+			    {% else %}
+			      <li class="disabled"><span>&raquo;</span></li>
+			    {% endif %}
+			  </ul>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<!--listing end-->
+{% endblock %}

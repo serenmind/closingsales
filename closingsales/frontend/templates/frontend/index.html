@@ -1,0 +1,14 @@
+{% extends "application.html" %}
+{% load static %}
+{% block mainblock %}
+  {% include "shared/frontend/map.html" %}
+  {% include "shared/frontend/search.html" %}
+  {% include "shared/frontend/feature_ads.html" %}
+  {% include "shared/frontend/categories.html" %}
+{% endblock mainblock %}
+
+{% block javascripts %}
+<script src="{% static 'javascripts/frontend/googlemap.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx9-BAzvVk_q_Qrd4T_qcuCfVtmUldFpE&callback=initMap"></script>
+
+{% endblock %}

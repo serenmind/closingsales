@@ -1,0 +1,67 @@
+.footer-wrap{
+  background:black;
+}
+.slider-wrap {
+  background-image:  url("/static/images/slider-bg2.jpg")
+}
+
+.danger {
+  background-color: red;
+}
+
+.post-btn a, .view-btn a {
+	border-radius: 0px;
+}
+.somepadding {
+	height: 50px;
+	background-color: rgb(77,106,121);
+}
+#main-map {
+	height: 430px;
+}
+@media (max-width: 768px) {
+	.full-width {
+		padding-left: 0;
+		padding-right: 0;
+	}
+}
+.header-wrap .logo {
+	padding-top: 0px;
+}
+.logo img {
+	height: 70px;
+}
+.footer-logo img {
+	height: 60px;
+}
+.feature-image {
+	text-align: center;
+	background-color: #f2f2f2;
+}
+li .feature-image img {
+	max-height: 120px;
+}
+
+#contact-form .help-block {
+	color: red;
+	display: none;
+}
+.has-error {
+	border-color: red;
+}
+.has-error .help-block {
+	display: block !important;
+}
+.category-container {
+  margin: 40px 0px;
+}
+.category-container:first-child {
+  margin-top: 0px;
+  margin-bottom: 40px;
+}
+.safety-tips {
+  text-align: center;
+}
+.closingshops-privacy {
+  text-align:justify;
+}

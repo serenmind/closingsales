@@ -1,0 +1,38 @@
+{% load static %}
+{% load i18n %}
+<div class="footer-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-6">
+        <h3>Über ClosingShops</h3>
+        <div class="footer-logo"><img src="{% static 'images/logo-latest.png' %}"></div>
+        <p>Unsere Mission ist es, Informationen über die verfügbaren Verkaufsangebote und deren Standort bereitzustellen und eine Verbindung zwischen Geschäftsinhabern und ihren potenziellen Kunden herzustellen...<a href="{% url 'about' %}">Mehr Erfahren</a></p>
+      </div>
+      <div class="col-md-2 col-sm-6">
+        <h3>LInks</h3>
+        <ul class="footer-links">
+          <li><a href="{% url 'home' %}">Home</a></li>
+          <li><a href="{% url 'about' %}">Über Uns</a></li>
+          <li><a href="{% url 'classifieds' %}">Aktuelle Angebote</a></li>
+          <li><a href="{% url 'contact' %}">Kontakt</a></li>
+          <li><a href="{% url 'privacy' %}">Datenschutz-Bestimmungen</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <h3>Hauptkategorien </h3>
+        <ul class="footer-category">
+          {% for cat in top_categories %}
+          <li><a href="{% url 'classifieds' %}?category={{cat.name}}">{{cat.name}}</a></li>
+          {% endfor %}
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+      <div class="col-md-3 col-sm-6">
+        <h3>Impressum</h3>
+        <div class="address">Theaterstraße 18, 52062 Aachen <br>Deutschland</div>
+        <div class="info"><i class="fa fa-phone" aria-hidden="true"></i> <a href="#."> +49 24195787737</a></div>
+      </div>
+    </div>
+    <div class="copyright">Copyright © 2017 - {% now "Y" %} ClosingShops - All Rights Reserved.</div>
+  </div>
+</div>

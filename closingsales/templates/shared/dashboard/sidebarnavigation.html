@@ -1,0 +1,58 @@
+{% load products_extracts %}
+<ul class="sidebar-menu" id="sidebar-dashboard-menu">
+  <li {% if request.path == '/dashboard/'%} class= "active" {% endif %}>
+    <a href="{% url 'dashboard' %}">
+      <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+    </a>
+  </li>
+
+  <li data-widget="tree" id="profile" {% if request.path|startswith:'/accounts' %} class="treeview active menu-open" {% else %}class="treeview"{% endif %}>
+    <a href="#">
+      <i class="fa fa-edit"></i> <span>Account</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+    <ul class="treeview-menu">
+      <li>
+        <a href="{% url 'profile' %}"><i class="fa fa-circle-o"></i>Profile</a>
+      </li>
+      <li>
+        <a href="{% url 'change_password' %}"><i class="fa fa-circle-o"></i>Change Password</a>
+      </li>
+    </ul>
+  </li>
+
+  {% if user.is_superuser %}
+  <li {% if request.path|contains:'/categories' %} class="treeview active menu-open" {% else %}class="treeview"{% endif %}>
+    <a href="{% url 'categories-list' %}">
+      <i class="fa fa-list"></i> <span>Categories</span>
+    </a>
+  </li>
+  <li {% if request.path|contains:'/subcategories' %} class="treeview active menu-open" {% else %}class="treeview"{% endif %} >
+    <a href="{% url 'subcategories-list' %}">
+      <i class="fa fa-list"></i> <span>Subcategories</span>
+    </a>
+  </li>
+  {% endif %}
+  <li data-widget="tree" {% if request.path|startswith:'/dashboard/advertisements' %} class="treeview active menu-open" {% else %}class="treeview"{% endif %}>
+    <a href="#">
+      <i class="fa fa-list"></i> <span>Advertisements</span>
+      <span class="pull-right-container">
+        <i class="fa fa-angle-left pull-right"></i>
+      </span>
+    </a>
+    <ul class="treeview-menu">
+      <li>
+        <a href="{% url 'advertisements-list' %}">
+          <i class="fa fa-circle-o"></i><span> {% if user.is_superuser %}All Ads {% else %} Your Ads {% endif %}</span>
+        </a>
+      </li>
+      <li>
+        <a href="{% url 'advertisement-new' %}">
+          <i class="fa fa-circle-o"></i><span>Create New</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+</ul>

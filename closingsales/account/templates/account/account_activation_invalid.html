@@ -1,0 +1,31 @@
+{% extends "application.html" %}
+{% block title %} - Ungültiger Aktivierungslink {% endblock title %}
+{% block mainblock %}
+<div class="inner-heading danger">
+  <div class="container">
+    <h1>Ungültiger Aktivierungslink</h1>
+  </div>
+</div>
+<div class="inner-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-2"></div>
+      <div class="col-md-6 col-sm-8">
+        <div class="login">
+          <div class="formint conForm">
+            <div class="alert alert-danger" role="alert">
+              <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+              <span class="sr-only">Error:</span>
+              Ungültiger Aktivierungslink
+            </div>
+            <p>
+             Wenn das Klicken auf den Link nicht funktioniert, kopieren Sie die URL und fügen Sie sie stattdessen in ein neues Browserfenster ein. Wenn Sie das Konto zuvor aktiviert hatten, können Sie sich mit Ihren Anmeldeinformationen anmelden.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-2"></div>
+    </div>
+  </div>
+</div>
+{% endblock mainblock %}

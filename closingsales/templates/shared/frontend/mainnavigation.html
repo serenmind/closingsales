@@ -1,0 +1,34 @@
+{% load static %}
+<div class="header-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-12">
+        <div class="logo"><a href="{% url 'home' %}"><img src="{% static 'images/logo-latest.png' %}"></a></div>
+      </div>
+      <div class="col-md-7 col-sm-9 full-width">
+        <div class="navigationwrape">
+          <div class="navbar navbar-default" role="navigation">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li> <a href="/" {% if request.path == '/' %}class="active"{% endif %}> Home </a></li>
+                <li> <a href="{% url 'about' %}" {% if request.path == '/about-us' %}class="active"{% endif %} > Über Uns</a></li>
+                <li> <a href="{% url 'classifieds' %}" {% if request.path == '/classifieds' %}class="active"{% endif %}>Alle Anzeigen</a></li>
+                <li> <a href="{% url 'contact' %}" {% if request.path == '/contact' %}class="active"{% endif %} > KONTAKTIEREN </a></li>
+              </ul>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-2 col-sm-3">
+        <div class="post-btn"><a href="{%url 'advertisement-new' %}">ANZEIGE INSERIEREN</a></div>
+      </div>
+      <!--col-md-2 end-->
+    </div>
+    <!--row end-->
+  </div>
+</div>
+<!--header start end-->

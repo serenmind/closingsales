@@ -1,0 +1,158 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Standort des Geschäfts</h4>
+      </div>
+      <div class="modal-body">
+        <p>Bitte klicken Sie auf Karte und wählen Sie Ihren Shop-Standort. Sie können auf die Karte klicken und sie ziehen, um die genaue Position zu ermitteln.</p>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="box box-info col-sx-12 col-md-8">
+	<div class="box-header with-border">
+		<h3 class="box-title">Anzeige erstellen</h3>
+	</div>
+	<!-- /.box-header -->
+	<!-- form start -->
+	<form class="form-horizontal" method="post" action="{% url 'advertisement-new' %}"
+			enctype="multipart/form-data" id="advertisement-new-form" novalidate>
+		{% csrf_token %}
+		<div class="box-body">
+			<div class="form-group">
+				<label for="id_shoptype" class="col-sm-2 control-label">Kategorie*:</label>
+				<div class="col-sm-10">
+					<select name="category" id="id_category" class="form-control" data-required="true">
+						<option value="">Kategorie auswählen</option>
+						{% for category in categories %}
+							<option value="{{category.id}}">{{category.name}}</option>
+						{% endfor %}
+					</select>
+					<span class="help-block">Bitte Kategorie auswählen</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="id_subcategory" class="col-sm-2 control-label">Unterkategorie:</label>
+				<div class="col-sm-10">
+					<select name="subcategory" required="" id="id_subcategory" class="form-control" data-required="true">
+						<option value="">Unterkategorie auswählen</option>
+					</select>
+					<span class="help-block">Bitte Unterkategorie auswählen</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="id_title" class="col-sm-2 control-label">Titel*:</label>
+				<div class="col-sm-10">
+					<input type="text" name="title" maxlength="255" required id="id_title" class="form-control" data-required="true">
+					<span class="help-block">Bitte geben Sie den Anzeigentitel ein</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="id_description" class="col-sm-2 control-label">Beschreibung*:</label>
+				<div class="col-sm-10">
+					<textarea name="description" cols="40" rows="10" id="id_description" class="form-control" data-required="true"></textarea>
+					<span class="help-block">Bitte beschreiben Sie Ihre Werbung und geben Sie die verfügbaren Produkte an.</span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="id_start_date" class="col-sm-2 control-label">Anzeigedatum*:</label>
+				<div class="col-sm-10">
+					<input type="text" name="start_date" id="id_start_date" class="form-control">
+					<span class="help-block">Bitte wählen Sie Start- und Enddatum Ihrer Anzeige</span>
+				</div>
+			</div>
+			<div class="bootstrap-timepicker">
+				<div class="form-group">
+					<label for="id_opening_hour" class="col-sm-2 control-label">Öffnungszeit*:</label>
+					<div class="col-sm-10">
+						<input type="text" name="opening_hour" id="id_opening_hour" class="form-control timepicker">
+						
+						<span class="help-block">Bitte wählen Sie die Öffnungszeit Ihres Geschäfts</span>
+					</div>
+				</div>
+			</div>
+			<div class="bootstrap-timepicker">
+				<div class="form-group">
+					<label for="id_closing_hour" class="col-sm-2 control-label">Geschäftsschlusszeit*:</label>
+					<div class="col-sm-10">
+						<input type="text" name="closing_hour" id="id_closing_hour" class="form-control timepicker">
+						
+						<span class="help-block">Bitte wählen Sie die Geschäftsschlusszeit aus</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-sx-12">
+
+				<div class="col-xs-12 col-md-6">
+					<h3>Addresse*</h3>
+					<div class="form-group">
+						<label for="id_state" class="col-sm-2 control-label">Staat*:</label>
+						<div class="col-sm-10">
+							<select name="state" required="" id="id_state" class="form-control" data-required="true">
+								<option value="">Staat wählen</option>
+								{% for state in states %}
+									<option value="{{state.name}}">{{state.name}}</option>
+								{% endfor %}
+							</select>
+							<span class="help-block">Bitte Staat wählen</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="id_zipcode" class="col-sm-2 control-label">Postleitzahl*:</label>
+						<div class="col-sm-10">
+							<input type="text" name="zipcode" maxlength="10" data-required="true" id="id_zipcode" class="form-control">
+							<span class="help-block">Bitte geben Sie Ihre Postleitzahl ein</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="id_address" class="col-sm-2 control-label">Addresse:</label>
+						<div class="col-sm-10">
+							<input type="text" name="address" maxlength="100" data-required="true" id="id_address" class="form-control">
+							<span class="help-block">Bitte geben Sie die Geschäftsadresse ein</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="id_address1" class="col-sm-2 control-label">Sekundäre Adresse::</label>
+						<div class="col-sm-10">
+							<input type="text" name="address1" maxlength="100" id="id_address1" class="form-control">
+						</div>
+					</div>
+
+					<input type="hidden" name="longitude" maxlength="50" id="id_longitude" class="form-control">
+					<input type="hidden" name="latitude" maxlength="50" id="id_latitude" class="form-control">
+				</div>
+				<div class="col-xs-12 col-md-6">
+					<div class="alert-info map-info" role="alert">
+						<h4>
+							Bitte klicken Sie auf die Karte, um den Standort festzulegen.
+						</h4>
+					</div>
+					<div id="map"></div>
+				</div>
+			</div>
+		</div>
+		<!-- /.box-body -->
+		<div class="box-footer">
+			<a href="{% url 'advertisements-list' %}" class="btn btn-danger flat">Stornieren</a>
+			<button class="btn btn-info pull-right flat" id="create-ad-btn">Weiter (Bilder hinzufügen)</button>
+		</div>
+		<!-- /.box-footer -->
+	</form>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script type="text/javascript" src="{% static 'javascripts/dashboard/bootstrap3-wysihtml5.all.min.js'%}"></script>
+	<script type="text/javascript" src="{% static 'javascripts/dashboard/ad_new.js'%}"></script>
+	<script type="text/javascript" src="{% static 'javascripts/map.js' %}"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx9-BAzvVk_q_Qrd4T_qcuCfVtmUldFpE&callback=initMap"></script>
+	
+	
+{% endblock javascripts %}

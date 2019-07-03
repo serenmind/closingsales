@@ -1,0 +1,66 @@
+{% extends "application.html" %}
+{% load static %}
+{% block mainblock %}
+<div class="inner-heading">
+  <div class="container">
+    <h1>Registrieren</h1>
+  </div>
+</div>
+<div class="inner-wrap">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-sm-2"></div>
+      <div class="col-md-6 col-sm-8">
+        <div class="login">
+          <div class="contctxt">Bitte füllen Sie alle Felder aus</div>
+          <div class="formint conForm">
+            {% if form.errors %}
+                {% for field in form %}
+                  {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                      <strong>{{ error|escape }}</strong>
+                    </div>
+                  {% endfor %}
+                  {% endfor %}
+                {% for error in form.non_field_errors %}
+                  <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                  </div>
+                {% endfor %}
+              {% endif %}
+            <form method="post" action="{% url 'signup' %}">
+              {% csrf_token %}
+              <div class="input-wrap">
+                {{ form.email }}
+              </div>
+              <div class="input-wrap">
+                {{ form.name }}
+              </div>
+
+              <div class="input-wrap">
+                {{ form.phone }}
+              </div>
+              <div class="input-wrap">
+                {{ form.password1 }}
+              </div>
+              <div class="input-wrap">
+                {{ form.password2 }}
+              </div>
+
+              <div class="sub-btn">
+                <input type="submit" class="sbutn" value="Registriren">
+              </div>
+              <div class="newuser"><i class="fa fa-user" aria-hidden="true"></i> Schon ein Mitglied? <a href="{% url 'signin' %}">Log In</a></div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-2"></div>
+    </div>
+  </div>
+</div>
+{% endblock mainblock %}
+
+{% block javascripts %}
+  <script type="text/javascript" src="{% static 'javascripts/frontend/signup.js' %}"></script>
+{% endblock javascripts %}

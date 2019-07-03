@@ -1,0 +1,99 @@
+{% load static %}
+{% load products_extracts %}
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>ClosingShops | Dashboard</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Ubuntu:400,300italic,300,400italic,500italic,500,700,700italic' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+  <!-- Daterange picker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.1/daterangepicker.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-wysiwyg/0.3.3/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+  <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/daterangepicker.css'%}">
+  <link rel="stylesheet" href="{% static 'css/AdminLTE.min.css'%}">
+  <link rel="stylesheet" href="{% static 'css/skin-purple.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap-timepicker.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap3-wysihtml5.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div class="wrapper">
+
+  {% include 'shared/dashboard/header.html' %}
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+      <!-- Sidebar user panel -->
+      <div class="user-panel">
+        <div class="text-center">
+          {% if user.is_superuser %}
+            <p class="username-text">ClosingShops</p>
+          {% else %}
+            <p class="username-text">{{ user.name }}</p>
+          {% endif %}
+
+          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+        </div>
+      </div>
+      <!-- sidebar menu: : style can be found in sidebar.less -->
+      {% include 'shared/dashboard/sidebarnavigation.html' %}
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+
+    <section class="content-header">
+      <h1>
+        Dashboard
+        <small>{{ request.path|dashboardtext }}</small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="{% url 'dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+        {{ request.path|breadcrumb|safe}}
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      {% block content %}
+      {% endblock %}
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  {% include 'shared/dashboard/footer.html' %}
+</div>
+<!-- ./wrapper -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="{% static 'javascripts/ajaxsetup.js' %}"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{% static 'javascripts/moment-with-locales.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/dashboard/daterangepicker.js' %}"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+<script type="text/javascript" src="{% static 'javascripts/dashboard/adminlte.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'javascripts/dashboard/dashboard.js' %}"></script>
+{% block javascripts %}
+
+{% endblock javascripts %}
+<!-- jQuery 3 -->
+</body>
+</html>

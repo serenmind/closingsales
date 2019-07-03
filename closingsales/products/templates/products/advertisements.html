@@ -1,0 +1,139 @@
+{% extends "dashboard.html" %} {% block content %}
+<div class="box">
+  <div class="box-header">
+    <h3 class="box-title">Advertisements</h3>
+    <div class="box-tools">
+      <form class="" action="." method="get">
+        <div class="input-group input-group-sm" style="width: 150px;">
+          <input type="text" name="search" class="form-control pull-right" placeholder="Search" value="{{search}}">
+          <div class="input-group-btn">
+            <button type="submit" class="btn btn-default">
+              <i class="fa fa-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body table-responsive no-padding">
+    <table class="table table-hover">
+      <tbody>
+        <tr>
+          <th>S.N</th>
+          <th>Name</th>
+          <th>Date Created</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+        {% for advertisement in advertisements %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{advertisement.title}}</td>
+          <td>{{advertisement.created_at|date:"M d, Y" }}</td>
+          <td>
+            {% if advertisement.status == 'PENDING' %}
+            <span class="label label-warning">Pending</span>
+            {% elif advertisement.status == 'APPROVED' %}
+            <span class="label label-success">Approved</span>
+            {% elif advertisement.status == 'DENIED' %}
+            <span class="label label-danger">Denied</span>
+            {% else %}
+            <span class="label label-primary">Archived</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'classified-detail' advertisement.id %}" class="btn btn-primary btn-flat" target="_blank">Detail</a>
+            <a href="{% url 'ad-edit' advertisement.id %}" class="btn btn-warning btn-flat">Edit</a>
+            <a href="{% url 'ad-delete' advertisement.id %}" class="btn btn-danger btn-flat">Delete</a>
+
+            {% if user.is_superuser %}
+              {% if advertisement.status == 'PENDING' %}
+                <button class="btn btn-success btn-flat approve-btn" data-advertisement-id="{{ advertisement.id }}">Approve</button>
+              {% endif %}
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td>Ad Not Found</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer clearfix">
+    <div class="pull-left">
+      <a href="{% url 'advertisement-new' %}" class="btn btn-block btn-primary btn-flat">Create New</a>
+    </div>
+    {% if is_paginated %}
+    <ul class="pagination pagination-sm no-margin pull-right">
+      {% if page_obj.has_previous %}
+      <li>
+        <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <span>&laquo;</span>
+      </li>
+      {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+      <li class="active">
+        <span>{{ i }}
+          <span class="sr-only">(current)</span>
+        </span>
+      </li>
+      {% else %}
+      <li>
+        <a href="?page={{ i }}">{{ i }}</a>
+      </li>
+      {% endif %} {% endfor %} {% if page_obj.has_next %}
+      <li>
+        <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+      </li>
+      {% else %}
+      <li class="disabled">
+        <span>&raquo;</span>
+      </li>
+      {% endif %}
+    </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock content %}
+{% block javascripts %}
+<script type="text/javascript">
+    $(function() {
+      'use strict';
+      $(document).on('click', '.approve-btn', function(evt) {
+        var elem = $(evt.target);
+        var id = elem.data('advertisement-id');
+        $.ajax({
+          url: '/api/classifides/' + id + '/status/',
+          method: 'POST',
+          data: {
+            'status': 'APPROVED'
+          },
+          success: function(result) {
+            $(evt.target).remove();
+            toastr.info('Advertisement Approved Sucessfully.');
+            setTimeout(function() {
+              window.location = window.location
+            }, 200);
+          },
+          error : function(error) {
+            console.log('error', error)
+          }
+
+        })
+      });
+    })
+</script>
+
+{% endblock %}
+

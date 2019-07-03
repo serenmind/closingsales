@@ -1,0 +1,113 @@
+{% extends 'application.html' %}
+{% load static %}
+
+{% block mainblock %}
+	<!--inner heading start-->
+<div class="inner-heading">
+  <div class="container">
+    <h1>{{advertisement.title}} Details </h1>
+  </div>
+</div>
+<!--inner heading end--> 
+
+<!--Detail page start-->
+<div class="inner-wrap about">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <div id="main" role="main">
+          <div class="slider">
+            <div class="flexslider innerslider">
+              <ul class="slides">
+                {% if images.count %}
+                	{% for img in images %}
+                  <li data-thumb="{{ img.file.url }}"> <img src="{{ img.file.url }}" /> </li>
+                  {% endfor %}
+                  {% else %}
+                  <li data-thumb="{% static 'images/placeholder_details.png'%}"> <img src="{% static 'images/placeholder_details.png'%}" /> </li>
+                {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <h2>Beschreibung</h2>
+        {{ advertisement.description | safe }}
+      </div>
+      <div class="col-md-4">
+        <div class="sidebarWrp">
+        	{% if owner %}
+	          <div class="userinfo">
+	            <div class="icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+	            <h3>{{ owner.name }}</h3>
+	            {% if owner.created_at %}
+	            	<p>Mitglied seit {{ owner.created_at | date:"F, Y" }}</p>
+	            {% endif %}
+	          </div>
+	          {% if owner.phone %}
+	          <div class="phone">{{ owner.phone }} </div>
+	          {% endif %}
+          {% endif %}
+          <div id="map" class="map" style="height: 250px;">
+        
+          </div>
+          <div class="safety-tips">
+            <h3>Geschäftsdetails</h3>
+            <ul>
+		          {% if owner %}
+  		        	{% if owner.name %}
+                  <li>{{owner.name}}</li>
+                {% endif %}
+                {% if advertisement.open_at %}
+                  <li>Öffnungszeiten : {{ advertisement.open_at }} - {{ advertisement.closed_at }}</li>
+                {% endif %}
+                  <li>Von {{ advertisement.start_date }} bis {{advertisement.end_date}}</li>
+                  <li>{{ advertisement.zipcode }},{{ advertisement.address }} {% if advertisement.address1 %} {{advertisement.address1}} {% endif %}</li>
+                  <li>{{ advertisement.state }}</li>
+                  <li>{{owner.email}}</li>
+                  {% if owner.phone %}
+                  <li>Phone: {{owner.phone}}</li>
+                  {% endif %}
+		          {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Detail page end--> 
+{% endblock %}
+
+{% block javascripts %}
+  <script type="text/javascript">
+    var map;
+    function initMap() {
+      var lat = '{{advertisement.latitude}}';
+      var lng = '{{advertisement.longitude}}'
+      var myLatLng = {lat:  parseFloat(lat), lng: parseFloat(lng)};
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: myLatLng,
+          zoom: 8
+        });
+        new google.maps.Marker({
+          position: myLatLng,
+          map: map
+        });
+        
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCx9-BAzvVk_q_Qrd4T_qcuCfVtmUldFpE&callback=initMap"></script>
+	<script type="text/javascript" src="{% static 'javascripts/jquery.flexslider.js' %}"></script>
+	<script type="text/javascript">
+
+    $(window).on('load', function(){
+      $('.flexslider').flexslider({
+        animation: "slide",
+        controlNav: "thumbnails",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div class="box">
+    <div class="box-body">
+        <form method="post">{% csrf_token %}
+            <p>Sind Sie sicher, dass Sie löschen möchten "{{ object }}"?</p>
+            <input type="submit" value="Confirm"   class="btn btn-danger btn-flat"/>
+        </form>
+    </div>
+</div>
+{% endblock content %}

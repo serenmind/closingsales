@@ -1,0 +1,47 @@
+{% load static %}
+<!--feature start-->
+<div class="feature-wrap">
+  <div class="container">
+    <div class="heading-title">Aktuelle Anzeigen</div>
+    {% if latest_ads %}
+    <div class="heading-text">Sonderverkäufe in Ihrer Nähe entdecken!!!</div>
+    {% else %}
+    <div class="heading-text">Entschuldigung, zur Zeit gibt es keine Anzeigen.</div>
+    {% endif %}
+    
+    <ul class="row feature-service">
+      
+      {% for ad in latest_ads %}
+        <li class="col-md-3 col-sm-6 col-xs-12">
+            {% with images=ad.images %}
+              {% with image=images.first %}
+                  {% if image %}
+                      <div class="feature-image"><img src="{{ image.file.url }}"></div>
+                  {% else %}
+                    <div class="feature-image"><img src="{% static 'images/placeholder.png'%}"></div>
+                  {% endif %}
+              {% endwith %}                
+            {% endwith %}
+        <div class="feature">
+          <div class="feat-bg">
+            <h3><a href="{% url 'classified-detail' ad.id %}">{{ ad.title }}</a></h3>
+          </div>
+          <div class="feature-detail">
+            <ul class="featureList">
+              <li><i class="fa fa-map-marker" aria-hidden="true"></i>{{ad.address}}</li>
+              
+            </ul>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+
+      
+      
+    </ul>
+    {% if latest_ads %}
+    <div class="view-btn"><a href="{% url 'classifieds' %}">Alle Angebote</a></div>
+    {% endif %}
+  </div>
+</div>
+<!--feature end-->

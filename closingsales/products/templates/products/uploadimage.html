@@ -1,0 +1,68 @@
+{% extends 'dashboard.html'%}
+{% load static %}
+
+{% block content %}
+<div class="modal fade" id="modal-progress" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Uploading...</h4>
+      </div>
+      <div class="modal-body">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" style="width: 0%;">0%</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="callout callout-danger alert alert-info alert-dismissible closingshop-info-alert" role="alert" id="adblocker-detect" style="display: none;">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	It seems you are using ad blocker. To work properly please disable your ad blocker and refresh page.
+</div>
+<div class="box">
+	<div class="box-header">
+		<h3 class="box-title">Upload Image</h3>
+	</div>
+	<!-- /.box-header -->
+	<div class="box-body table-responsive no-padding">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Images</th>
+				</tr>
+			</thead>
+			<tbody id="uploaded-images-container">
+				{% for image in images %}
+			      <tr>
+			        <td>
+			        	<img src="{{ image.file.url }}" data-id="{{image.id}}" class="img-responsive pad" />
+			        	<button class="btn btn-danger"><i class="fa fa-times-circle"></i></button>
+			        </td>
+			      </tr>
+			    {% endfor %}
+			</tbody>
+		</table>
+	</div>
+	<!-- /.box-body -->
+	<div class="box-footer clearfix">
+		<div class="pull-right">
+			<input id="fileupload" type="file" name="file" multiple
+           			style="display: none;"
+           			data-url="{% url 'uploadimage' advertisement.id %}"
+           			data-form-data='{"csrfmiddlewaretoken": "{{ csrf_token }}"}'
+           			accept="image/*" 
+           			>
+			<button class="btn btn-block btn-primary btn-flat js-upload-photos" id="upload-btn"><span class="glyphicon glyphicon-cloud-upload" ></span> Bilder hochladen</button>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="{% static 'javascripts/jquery-ui.min.js' %}"></script>
+  	<script src="{% static 'javascripts/jquery.transport.js' %}"></script>
+  	<script src="{% static 'javascripts/jquery.fileupload.js' %}"></script>
+  	<script src="{% static 'javascripts/utils.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascripts/dashboard/imageupload.js' %}"></script>
+{% endblock %}

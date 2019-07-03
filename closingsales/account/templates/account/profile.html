@@ -1,0 +1,21 @@
+{% extends 'dashboard.html'%}
+
+{% block content %}
+<div class="box box-primary">
+  <div class="box-body box-profile">
+    <h3 class="profile-username text-center">{{user.name}}</h3>
+    <ul class="list-group list-group-unbordered">
+      <li class="list-group-item">
+        <b>Geschäftliche E-Mail</b> <a class="pull-right">{{user.email}}</a>
+      </li>
+      <li class="list-group-item">
+        <b>Geschäftsname</b> <a class="pull-right">{{user.name}}</a>
+      </li>
+      <li class="list-group-item">
+        <b>Geschäftstelefonnummer:</b> <a class="pull-right">{{user.phone}}</a>
+      </li>
+    </ul>
+  </div>
+  <!-- /.box-body -->
+</div>
+{% endblock content %}
